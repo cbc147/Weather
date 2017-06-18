@@ -1,5 +1,6 @@
 package com.example.wearther;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Build;
@@ -28,6 +29,7 @@ import gson.Weather;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
+import service.AutoUpdateService;
 import util.HttpUtil;
 import util.Utility;
 
@@ -176,7 +178,10 @@ public class WeatherActivity extends AppCompatActivity{
                             editor.putString("weather", responseText);
                             editor.apply();
                             mWeatherId = weather.basic.weatherId;
+                            Intent intent = new Intent(WeatherActivity.this , AutoUpdateService.class);
+                            startService(intent);
                             showWeatherInfo(weather);
+
                         } else {
                             Toast.makeText(WeatherActivity.this, "获取天气信息失败", Toast.LENGTH_SHORT).show();
                         }
